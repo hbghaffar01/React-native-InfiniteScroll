@@ -1,97 +1,131 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# InfiniteScroll - React Native App
 
-# Getting Started
+A React Native infinite scrolling application that demonstrates loading data progressively as the user scrolls.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Setup Instructions
 
-## Step 1: Start Metro
+### Prerequisites
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- Node.js (version 18 or higher)
+- JDK 11 or newer
+- Android Studio (for Android development)
+- Android SDK
+- Git
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### Installation
+
+1. Clone the repository:
 
 ```sh
-# Using npm
+git clone https://github.com/hbghaffar01/React-native-InfiniteScroll
+cd React-native-InfiniteScroll
+```
+
+2. Install dependencies:
+
+```sh
+npm install
+# OR
+yarn install
+```
+
+## Development
+
+### Start Metro Server
+
+First, start the Metro dev server:
+
+```sh
 npm start
-
-# OR using Yarn
-yarn start
+# OR
+npm run react-native run-android
 ```
 
-## Step 2: Build and run your app
+### Run on Development Device/Emulator
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+With Metro running, open a new terminal and use one of the following commands:
 
-### Android
+#### Android
 
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
-yarn android
+# OR
+npm run react-native run-android
 ```
 
-### iOS
+#### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+Install CocoaPods dependencies first (only needed initially or after updating native dependencies):
 
 ```sh
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+Then run:
 
 ```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
+# OR
+npm run react-native run-ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Building for Production
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### Android APK
 
-## Step 3: Modify your app
+1. Generate a signing key:
 
-Now that you have successfully run the app, let's make changes!
+```sh
+keytool -genkeypair -v -storetype PKCS12 -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+2. Move the keystore file to the `android/app/` directory or update `gradle.properties` with the full path
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+3. Configure signing in `android/gradle.properties`:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+```properties
+MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
+MYAPP_RELEASE_KEY_ALIAS=my-key-alias
+MYAPP_RELEASE_STORE_PASSWORD=your_password
+MYAPP_RELEASE_KEY_PASSWORD=your_password
+```
 
-## Congratulations! :tada:
+4. Build the release APK:
 
-You've successfully run and modified your React Native App. :partying_face:
+```sh
+cd android
+# Run this
+gradlew assembleRelease
+```
 
-### Now what?
+5. The APK will be generated at:
+   `android/app/build/outputs/apk/release/app-release.apk`
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+### Installing the APK on a Device
 
-# Troubleshooting
+1. Transfer the APK to your Android device
+2. On your device, enable "Install from Unknown Sources" in Security settings
+3. Navigate to the APK file and tap to install
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Alternatively, with a connected device:
 
-# Learn More
+```sh
+adb install "path/to/app-release.apk"
+```
 
-To learn more about React Native, take a look at the following resources:
+## Project Structure
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- `/android` - Android native code
+- `/ios` - iOS native code
+- `/src` - React Native JavaScript/TypeScript code
+  - `/components` - Reusable UI components
+  - `/store` - Redux store configuration
+  - `/utils` - Helper utilities
+
+## Technologies Used
+
+- React Native 0.77.1
+- Redux Toolkit
+- TypeScript
+- React Native Safe Area Context
